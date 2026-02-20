@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../Helpers/validation.php';
 use Core\Auth;
 use Core\DB;
 
