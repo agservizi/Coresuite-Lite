@@ -40,6 +40,11 @@ body {
     color: var(--text-primary);
 }
 
+body.app-layout.has-sidebar {
+    padding-top: var(--topbar-height);
+    padding-left: var(--sidebar-width);
+}
+
 .navbar {
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
@@ -65,9 +70,11 @@ body {
 }
 
 .main-content {
-    margin-left: var(--sidebar-width);
-    padding-top: calc(var(--topbar-height) + 1rem);
+    margin-left: 0;
+    padding-top: 1rem;
     min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card {
@@ -230,6 +237,10 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+    body.app-layout.has-sidebar {
+        padding-left: 0;
+    }
+
     .sidebar {
         transform: translateX(-100%);
         z-index: 45;
@@ -241,7 +252,7 @@ body {
 
     .main-content {
         margin-left: 0;
-        padding-top: calc(var(--topbar-height) + 1rem);
+        padding-top: 1rem;
     }
 
     .navbar-burger {

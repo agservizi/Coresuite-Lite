@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/theme.css">
 </head>
-<body>
+<body class="app-layout has-sidebar">
     <?php include __DIR__ . '/partials/topbar.php'; ?>
     <div class="sidebar-overlay"></div>
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
