@@ -5,6 +5,7 @@ $action = $isEdit ? '/admin/users/' . (int)$user['id'] : '/admin/users';
 
 $content = '
 <form method="POST" action="' . $action . '">
+    ' . CSRF::field() . '
     <div class="columns is-multiline">
         <div class="column is-6">
             <div class="field">
@@ -23,16 +24,23 @@ $content = '
             </div>
         </div>
 
-        ' . (!$isEdit ? '
         <div class="column is-6">
             <div class="field">
-                <label class="label">Password</label>
+                <label class="label">Password' . ($isEdit ? ' (lascia vuoto per non modificare)' : '') . '</label>
                 <div class="control">
-                    <input class="input" type="password" name="password" required>
+                    <input class="input" type="password" name="password" ' . (!$isEdit ? 'required' : '') . ' minlength="6">
                 </div>
             </div>
         </div>
-        ' : '') . '
+
+        <div class="column is-6">
+            <div class="field">
+                <label class="label">Telefono</label>
+                <div class="control">
+                    <input class="input" type="text" name="phone" value="' . htmlspecialchars($user['phone'] ?? '') . '" placeholder="+39 ...">
+                </div>
+            </div>
+        </div>
 
         <div class="column is-3">
             <div class="field">

@@ -27,6 +27,7 @@
                         <p class="subtitle">Configura il database e crea l'amministratore</p>
 
                         <form method="POST" action="/install">
+                            <?php echo CSRF::field(); ?>
                             <h2 class="subtitle">Database</h2>
                             <div class="field">
                                 <label class="label">Host</label>

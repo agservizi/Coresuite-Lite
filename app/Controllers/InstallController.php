@@ -25,12 +25,18 @@ class InstallController {
     }
 
     private function setup() {
-        $dbHost = $_POST['db_host'] ?? '';
-        $dbName = $_POST['db_name'] ?? '';
-        $dbUser = $_POST['db_user'] ?? '';
+        if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
+            http_response_code(403);
+            echo 'Token CSRF non valido';
+            return;
+        }
+
+        $dbHost = trim($_POST['db_host'] ?? '');
+        $dbName = trim($_POST['db_name'] ?? '');
+        $dbUser = trim($_POST['db_user'] ?? '');
         $dbPass = $_POST['db_pass'] ?? '';
-        $adminName = $_POST['admin_name'] ?? '';
-        $adminEmail = $_POST['admin_email'] ?? '';
+        $adminName = trim($_POST['admin_name'] ?? '');
+        $adminEmail = trim($_POST['admin_email'] ?? '');
         $adminPass = $_POST['admin_pass'] ?? '';
 
         // Salva .env

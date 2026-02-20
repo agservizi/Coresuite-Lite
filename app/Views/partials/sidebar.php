@@ -54,5 +54,12 @@ try {
         <ul class="menu-list">
             <li><a class="<?php echo $isActivePath('/documents', true) && !$isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents"><span class="icon"><i class="fas fa-file"></i></span> I miei documenti</a></li>
         </ul>
+
+        <p class="menu-label">
+            Account
+        </p>
+        <ul class="menu-list">
+            <li><a class="<?php echo $isActivePath('/profile') ? 'is-active' : ''; ?>" href="/profile"><span class="icon"><i class="fas fa-user-cog"></i></span> Profilo</a></li>
+        </ul>
     </nav>
 </aside>

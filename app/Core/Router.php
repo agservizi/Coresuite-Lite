@@ -137,6 +137,11 @@ class Router {
         $this->add('GET', '/tickets/:id', 'Ticket@show', ['middleware' => ['Auth']]);
         $this->add('POST', '/tickets/:id/comment', 'Ticket@addComment', ['middleware' => ['Auth']]);
         $this->add('POST', '/tickets/:id/status', 'Ticket@updateStatus', ['middleware' => ['Auth']]);
+        $this->add('POST', '/tickets/:id/assign', 'Ticket@assignTicket', ['middleware' => ['Auth', 'Role']]);
+
+        // Profile routes
+        $this->add('GET', '/profile', 'Profile@index', ['middleware' => ['Auth']]);
+        $this->add('POST', '/profile', 'Profile@update', ['middleware' => ['Auth']]);
 
         // Document routes
         $this->add('GET', '/documents', 'Document@list', ['middleware' => ['Auth']]);

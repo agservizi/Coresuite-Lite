@@ -28,7 +28,7 @@ class AuthController {
             if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
                 $error = 'Token di sicurezza non valido';
             } else {
-                $email = $_POST['email'] ?? '';
+                $email = trim($_POST['email'] ?? '');
                 $password = $_POST['password'] ?? '';
                 $remember = isset($_POST['remember']);
 
@@ -60,10 +60,43 @@ class AuthController {
 
     public function resetPassword($params = []) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            // Implementa invio email con token
-            // Per ora, solo placeholder
-            $message = 'Se l\'email esiste, riceverai un link per il reset.';
+            if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
+                $error = 'Token di sicurezza non valido';
+                include __DIR__ . '/../Views/reset_password.php';
+                return;
+            }
+
+            $email = trim($_POST['email'] ?? '');
+
+            // Cerca l'utente
+            $stmt = DB::prepare("SELECT id FROM users WHERE email = ? AND status = 'active'");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch();
+
+            if ($user) {
+                // Rimuovi token precedenti per questo utente
+                $stmt = DB::prepare("DELETE FROM password_resets WHERE user_id = ?");
+                $stmt->execute([$user['id']]);
+
+                // Genera token
+                $token = bin2hex(random_bytes(32));
+                $tokenHash = hash('sha256', $token);
+                $expires = date('Y-m-d H:i:s', time() + 3600); // 1 ora
+
+                $stmt = DB::prepare("INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES (?, ?, ?)");
+                $stmt->execute([$user['id'], $tokenHash, $expires]);
+
+                // In produzione qui si invierebbe l'email con il link
+                // Per ora, logga il link per test
+                $resetLink = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost') . '/reset-password/' . $token;
+                Auth::logAction('password_reset_request', 'user', $user['id']);
+
+                // Salva link in sessione per sviluppo (rimuovere in produzione)
+                $_SESSION['_dev_reset_link'] = $resetLink;
+            }
+
+            // Messaggio generico per evitare enumerazione utenti
+            $message = 'Se l\'email è registrata, riceverai un link per il reset della password.';
         }
 
         include __DIR__ . '/../Views/reset_password.php';
@@ -71,17 +104,58 @@ class AuthController {
 
     public function resetPasswordForm($params = []) {
         $token = $params['token'] ?? '';
+
+        if (empty($token)) {
+            header('Location: /login');
+            exit;
+        }
+
+        // Verifica che il token sia valido
+        $tokenHash = hash('sha256', $token);
+        $stmt = DB::prepare("SELECT pr.*, u.email FROM password_resets pr JOIN users u ON pr.user_id = u.id WHERE pr.token_hash = ? AND pr.expires_at > NOW() AND pr.used_at IS NULL");
+        $stmt->execute([$tokenHash]);
+        $resetRecord = $stmt->fetch();
+
+        if (!$resetRecord) {
+            $error = 'Il link di reset è scaduto o non valido. Richiedi un nuovo link.';
+            include __DIR__ . '/../Views/reset_password_form.php';
+            return;
+        }
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!CSRF::verifyToken($_POST['csrf_token'] ?? '')) {
+                $error = 'Token di sicurezza non valido';
+                include __DIR__ . '/../Views/reset_password_form.php';
+                return;
+            }
+
             $password = $_POST['password'] ?? '';
             $confirm = $_POST['confirm'] ?? '';
 
-            if ($password === $confirm && strlen($password) >= 8) {
-                // Verifica token e aggiorna password
-                // Placeholder
-                $message = 'Password aggiornata con successo.';
-            } else {
-                $error = 'Password non valida o non corrispondente.';
+            if ($password !== $confirm) {
+                $error = 'Le password non corrispondono.';
+                include __DIR__ . '/../Views/reset_password_form.php';
+                return;
             }
+
+            if (strlen($password) < 8) {
+                $error = 'La password deve essere di almeno 8 caratteri.';
+                include __DIR__ . '/../Views/reset_password_form.php';
+                return;
+            }
+
+            // Aggiorna password
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = DB::prepare("UPDATE users SET password_hash = ? WHERE id = ?");
+            $stmt->execute([$passwordHash, $resetRecord['user_id']]);
+
+            // Segna token come usato
+            $stmt = DB::prepare("UPDATE password_resets SET used_at = NOW() WHERE id = ?");
+            $stmt->execute([$resetRecord['id']]);
+
+            Auth::logAction('password_reset', 'user', $resetRecord['user_id']);
+
+            $message = 'Password aggiornata con successo. Puoi ora accedere con la nuova password.';
         }
 
         include __DIR__ . '/../Views/reset_password_form.php';

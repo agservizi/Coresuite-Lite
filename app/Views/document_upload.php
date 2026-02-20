@@ -3,6 +3,7 @@ $pageTitle = 'Carica Documento';
 
 $content = '
 <form method="POST" action="/documents" enctype="multipart/form-data">
+    ' . CSRF::field() . '
     <div class="field">
         <label class="label">Cliente</label>
         <div class="control">

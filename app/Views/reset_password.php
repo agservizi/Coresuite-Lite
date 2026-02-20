@@ -36,6 +36,7 @@
                     <?php endif; ?>
 
                     <form method="POST" action="/reset-password">
+                        <?php echo CSRF::field(); ?>
                         <div class="field">
                             <div class="control has-icons-left">
                                 <input class="input" type="email" name="email" placeholder="Email" required>

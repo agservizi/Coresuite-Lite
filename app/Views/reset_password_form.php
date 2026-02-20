@@ -35,6 +35,7 @@
                     <?php endif; ?>
 
                     <form method="POST" action="/reset-password/<?php echo urlencode($token ?? ''); ?>">
+                        <?php echo CSRF::field(); ?>
                         <div class="field">
                             <div class="control has-icons-left">
                                 <input class="input" type="password" name="password" placeholder="Nuova password" required minlength="8">

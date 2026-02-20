@@ -128,28 +128,53 @@ document.addEventListener('DOMContentLoaded', function() {
     const canvas = document.getElementById('ticketChart');
     if (canvas) {
         const ctx = canvas.getContext('2d');
-        // Dati finti per demo
-        const data = [5, 8, 12, 7, 15, 10, 9, 14, 11, 6, 13, 8, 16, 12, 9, 11, 7, 14, 10, 13, 8, 15, 12, 9, 11, 7, 14, 10, 13, 8];
-        const max = Math.max(...data);
-        const width = canvas.width;
-        const height = canvas.height;
-        const barWidth = width / data.length;
+        // Dati dinamici dal server
+        const data = window._chartValues || [];
+        const labels = window._chartLabels || [];
+        if (data.length === 0) {
+            ctx.fillStyle = '#999';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Nessun dato disponibile', canvas.width / 2, canvas.height / 2);
+        } else {
+            const max = Math.max(...data, 1);
+            const width = canvas.width;
+            const height = canvas.height;
+            const padding = 30;
+            const barWidth = (width - padding) / data.length;
 
-        ctx.fillStyle = '#3273dc';
-        data.forEach((value, index) => {
-            const barHeight = (value / max) * (height - 20);
-            ctx.fillRect(index * barWidth, height - barHeight, barWidth - 2, barHeight);
-        });
+            ctx.fillStyle = '#3273dc';
+            data.forEach((value, index) => {
+                const barHeight = (value / max) * (height - padding - 10);
+                ctx.fillRect(padding + index * barWidth, height - padding - barHeight, barWidth - 2, barHeight);
+            });
 
-        // Assi
-        ctx.strokeStyle = '#cccccc';
-        ctx.beginPath();
-        ctx.moveTo(0, height);
-        ctx.lineTo(width, height);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(0, height);
-        ctx.stroke();
+            // Etichette asse X (ogni 5 giorni)
+            ctx.fillStyle = '#666';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'center';
+            labels.forEach((label, index) => {
+                if (index % 5 === 0 || index === labels.length - 1) {
+                    ctx.fillText(label, padding + index * barWidth + barWidth / 2, height - 5);
+                }
+            });
+
+            // Asse Y
+            ctx.strokeStyle = '#ddd';
+            ctx.beginPath();
+            ctx.moveTo(padding, 0);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width, height - padding);
+            ctx.stroke();
+
+            // Etichette asse Y
+            ctx.fillStyle = '#666';
+            ctx.textAlign = 'right';
+            for (let i = 0; i <= 4; i++) {
+                const val = Math.round((max / 4) * i);
+                const y = height - padding - ((val / max) * (height - padding - 10));
+                ctx.fillText(val.toString(), padding - 5, y + 4);
+            }
+        }
     }
 });

@@ -72,7 +72,7 @@ $displayName = $currentUser['name'] ?? 'Utente';
                     <?php echo htmlspecialchars($displayName); ?>
                 </a>
                 <div class="navbar-dropdown">
-                    <a class="navbar-item" href="/dashboard">
+                    <a class="navbar-item" href="/profile">
                         Area personale
                     </a>
                     <hr class="navbar-divider">

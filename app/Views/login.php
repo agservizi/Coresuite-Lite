@@ -29,7 +29,7 @@
 
                         <?php if (isset($error)): ?>
                         <div class="notification is-danger is-light">
-                            <?php echo $error; ?>
+                            <?php echo htmlspecialchars($error); ?>
                         </div>
                         <?php endif; ?>
 
