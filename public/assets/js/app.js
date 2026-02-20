@@ -43,27 +43,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    if (collapseBtn && sidebar) {
-        collapseBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            if (window.innerWidth <= 768) {
-                const wasActive = sidebar.classList.contains('is-active');
-                sidebar.classList.toggle('is-active');
-                if (overlay) overlay.classList.toggle('is-active');
-                if (!wasActive && sidebar.classList.contains('is-active')) {
-                    console.log('[Sidebar] Aperta (mobile overlay)');
-                } else if (wasActive && !sidebar.classList.contains('is-active')) {
-                    console.log('[Sidebar] Chiusa (mobile overlay)');
-                }
-            } else {
-                const collapsed = !sidebar.classList.contains('collapsed');
-                setSidebarCollapsed(collapsed);
+    if (sidebar) {
+        // Click diretto sul bottone se presente
+        if (collapseBtn) {
+            collapseBtn.setAttribute('aria-expanded', 'false');
+            collapseBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                handleCollapseClick(e.currentTarget);
+            });
+        }
+
+        // Event delegation: cattura click anche se il bottone viene rigenerato
+        document.addEventListener('click', function (e) {
+            const target = e.target.closest ? e.target.closest('#sidebarCollapseBtn') : null;
+            if (target) {
+                e.preventDefault();
+                handleCollapseClick(target);
             }
         });
+
         // All'avvio: sincronizza stato
         syncSidebarState();
         // Aggiorna su resize
         window.addEventListener('resize', syncSidebarState);
+    }
+
+    function handleCollapseClick(btn) {
+        // ricarica riferimenti dinamici
+        const isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            const wasActive = sidebar.classList.contains('is-active');
+            sidebar.classList.toggle('is-active');
+            if (overlay) overlay.classList.toggle('is-active');
+            console.log(wasActive ? '[Sidebar] Chiusa (mobile overlay)' : '[Sidebar] Aperta (mobile overlay)');
+            if (btn) btn.setAttribute('aria-expanded', sidebar.classList.contains('is-active') ? 'true' : 'false');
+            return;
+        }
+
+        // Desktop: collapse/expand
+        const collapsed = !sidebar.classList.contains('collapsed');
+        setSidebarCollapsed(collapsed);
+        if (btn) btn.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
     }
 
     // Overlay click chiude sidebar mobile

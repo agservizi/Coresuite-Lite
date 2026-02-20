@@ -190,7 +190,7 @@ body.app-layout.has-sidebar {
     padding: 1rem 0.5rem;
     overflow-y: auto;
     z-index: 30;
-    transition: transform 0.3s ease;
+    transition: width 0.18s ease, transform 0.18s ease;
 }
 
 .main-content {
