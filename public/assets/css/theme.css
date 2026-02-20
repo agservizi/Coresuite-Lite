@@ -1,0 +1,266 @@
+/* public/assets/css/theme.css */
+
+/* Variabili CSS per tema scuro */
+:root {
+    --bg-primary: #f5f7fb;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+    --primary-color: #3273dc;
+    --success-color: #48c774;
+    --warning-color: #ffdd57;
+    --danger-color: #f14668;
+    --info-color: #3298dc;
+    --topbar-height: 3.25rem;
+    --sidebar-width: 250px;
+    --sidebar-bg: #1f2937;
+    --sidebar-hover: #374151;
+    --sidebar-text: #f9fafb;
+    --sidebar-border: #374151;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --bg-card: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border-color: #444444;
+    --sidebar-bg: #2a2a2a;
+    --sidebar-hover: #333333;
+    --sidebar-text: #ffffff;
+    --sidebar-border: #444444;
+}
+
+/* Override Bulma per tema scuro */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.navbar {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 40;
+}
+
+.sidebar {
+    position: fixed;
+    top: var(--topbar-height);
+    left: 0;
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--topbar-height));
+    background-color: var(--sidebar-bg);
+    padding: 1rem;
+    overflow-y: auto;
+    z-index: 30;
+    transition: transform 0.3s ease;
+}
+
+.main-content {
+    margin-left: var(--sidebar-width);
+    padding-top: calc(var(--topbar-height) + 1rem);
+    min-height: 100vh;
+}
+
+.card {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.card-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.table th {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.table td {
+    border-color: var(--border-color);
+}
+
+.table tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+.input, .textarea, .select select {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.input:focus, .textarea:focus, .select select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}
+
+.button.is-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.button.is-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.button.is-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+.button.is-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.button.is-info {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+}
+
+.notification {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.notification.is-danger {
+    border-color: var(--danger-color);
+}
+
+.notification.is-success {
+    border-color: var(--success-color);
+}
+
+.notification.is-warning {
+    border-color: var(--warning-color);
+}
+
+.notification.is-info {
+    border-color: var(--info-color);
+}
+
+.menu {
+    background-color: var(--sidebar-bg);
+}
+
+.menu-list a {
+    color: var(--sidebar-text);
+}
+
+.menu-list a:hover {
+    background-color: var(--sidebar-hover);
+}
+
+.menu-list a.is-active {
+    background-color: var(--primary-color);
+    color: var(--sidebar-text);
+}
+
+.navbar-item.is-active {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.menu-label {
+    color: var(--sidebar-text);
+}
+
+.theme-mode-select select {
+    min-width: 110px;
+}
+
+.auth-theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 60;
+}
+
+.breadcrumb {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.breadcrumb a {
+    color: var(--text-secondary);
+}
+
+.breadcrumb a:hover {
+    color: var(--text-primary);
+}
+
+.modal-card {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.modal-card-head, .modal-card-foot {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+/* Login page */
+.login-page {
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.login-page .box {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        z-index: 45;
+    }
+
+    .sidebar.is-active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding-top: calc(var(--topbar-height) + 1rem);
+    }
+
+    .navbar-burger {
+        display: block;
+    }
+}
+
+/* Sidebar overlay per mobile */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 44;
+    display: none;
+}
+
+.sidebar-overlay.is-active {
+    display: block;
+}

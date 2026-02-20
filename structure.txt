@@ -1,0 +1,66 @@
+Coresuite Lite/
+├── app/
+│   ├── Controllers/
+│   │   ├── Admin/
+│   │   │   └── UserController.php
+│   │   ├── AuthController.php
+│   │   ├── TicketController.php
+│   │   └── DocumentController.php
+│   ├── Core/
+│   │   ├── Router.php
+│   │   ├── Auth.php
+│   │   └── DB.php
+│   ├── Helpers/
+│   │   ├── csrf.php
+│   │   └── validation.php
+│   ├── Middleware/
+│   │   ├── AuthMiddleware.php
+│   │   └── RoleMiddleware.php
+│   ├── Models/
+│   │   ├── User.php
+│   │   ├── Ticket.php
+│   │   ├── Comment.php
+│   │   └── Document.php
+│   └── Views/
+│       ├── partials/
+│       │   ├── topbar.php
+│       │   ├── sidebar.php
+│       │   ├── breadcrumbs.php
+│       │   └── flash.php
+│       ├── layout.php
+│       ├── login.php
+│       ├── dashboard.php
+│       ├── admin/users.php
+│       ├── client/tickets.php
+│       ├── client/documents.php
+│       ├── operator/tickets.php
+│       ├── ticket/detail.php
+│       ├── errors/404.php
+│       ├── errors/403.php
+│       ├── errors/500.php
+│       └── install.php
+├── public/
+│   ├── assets/
+│   │   ├── css/
+│   │   │   └── theme.css
+│   │   ├── js/
+│   │   │   └── app.js
+│   │   └── images/
+│   │       └── (placeholder for icons)
+│   ├── index.php
+│   ├── .htaccess
+│   └── preview.php (opzionale per demo)
+├── storage/
+│   ├── uploads/
+│   └── logs/
+├── docs/
+│   ├── INSTALL.md
+│   ├── REQUIREMENTS.md
+│   ├── SETUP.md
+│   ├── CONFIG.md
+│   ├── ROLES.md
+│   ├── TROUBLESHOOTING.md
+│   └── UI_GUIDE.md
+├── .env.example
+├── seed.php (facoltativo)
+└── README.md
