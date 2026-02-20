@@ -6,7 +6,26 @@ session_start();
 
 // Carica configurazione
 require_once __DIR__ . '/../app/Core/Config.php';
+require_once __DIR__ . '/../app/Core/Logger.php';
 require_once __DIR__ . '/../app/Helpers/csrf.php';
+
+// Logging globale errori PHP
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    \Core\Logger::error("[PHP] $errstr in $errfile:$errline", ['errno' => $errno]);
+    return false; // lascia gestire a PHP dopo aver loggato
+});
+set_exception_handler(function($ex) {
+    \Core\Logger::error('[EXCEPTION] ' . $ex->getMessage(), ['trace' => $ex->getTraceAsString()]);
+    http_response_code(500);
+    echo 'Si è verificato un errore interno.';
+    exit;
+});
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        \Core\Logger::error('[FATAL] ' . $error['message'], $error);
+    }
+});
 
 // Autoload semplice (per classi in app/)
 spl_autoload_register(function ($class) {
