@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', function () {
         function setSidebarCollapsed(collapsed) {
             if (collapsed) {
                 sidebar.classList.add('collapsed');
-                collapseBtn.querySelector('i').classList.remove('fa-angle-double-left');
-                collapseBtn.querySelector('i').classList.add('fa-angle-double-right');
+                collapseBtn.querySelector('i').classList.add('fa-bars-staggered');
+                collapseBtn.querySelector('i').classList.remove('fa-bars');
             } else {
                 sidebar.classList.remove('collapsed');
-                collapseBtn.querySelector('i').classList.remove('fa-angle-double-right');
-                collapseBtn.querySelector('i').classList.add('fa-angle-double-left');
+                collapseBtn.querySelector('i').classList.remove('fa-bars-staggered');
+                collapseBtn.querySelector('i').classList.add('fa-bars');
             }
             localStorage.setItem(COLLAPSE_KEY, collapsed ? '1' : '0');
         }

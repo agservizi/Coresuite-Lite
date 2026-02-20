@@ -20,9 +20,7 @@ try {
 }
 ?>
 <aside class="sidebar" id="sidebar">
-    <button id="sidebarCollapseBtn" class="sidebar-collapse-btn" title="Comprimi/espandi sidebar">
-        <span class="icon"><i class="fas fa-angle-double-left"></i></span>
-    </button>
+    <!-- Toggle collapse ora nella topbar -->
     <nav class="menu">
         <p class="menu-label sidebar-label">Generale</p>
         <ul class="menu-list">
