@@ -11,11 +11,6 @@
 <body class="login-page">
     <div class="auth-theme-toggle">
         <div class="select is-small theme-mode-select">
-            <select id="themeModeToggle" aria-label="Seleziona tema">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="system">System</option>
-            </select>
         </div>
     </div>
 

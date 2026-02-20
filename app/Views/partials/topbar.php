@@ -36,13 +36,28 @@ $displayName = $currentUser['name'] ?? 'Utente';
     <div id="navbarMenuUser" class="navbar-menu">
         <div class="navbar-end">
             <div class="navbar-item">
-                <div class="select is-small theme-mode-select">
-                    <select id="themeModeToggle" aria-label="Seleziona tema">
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                        <option value="system">System</option>
-                    </select>
-                </div>
+                    <div class="dropdown is-right is-hoverable" id="themeDropdown">
+                        <div class="dropdown-trigger">
+                            <button class="button is-small" aria-haspopup="true" aria-controls="theme-menu" id="themeToggleBtn" title="Tema">
+                                <span class="icon" id="themeIcon">
+                                    <i class="fas fa-sun"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="theme-menu" role="menu">
+                            <div class="dropdown-content">
+                                <a href="#" class="dropdown-item" data-theme="light">
+                                    <span class="icon"><i class="fas fa-sun"></i></span> Light
+                                </a>
+                                <a href="#" class="dropdown-item" data-theme="dark">
+                                    <span class="icon"><i class="fas fa-moon"></i></span> Dark
+                                </a>
+                                <a href="#" class="dropdown-item" data-theme="system">
+                                    <span class="icon"><i class="fas fa-desktop"></i></span> System
+                                </a>
+                            </div>
+                        </div>
+                    </div>
             </div>
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">

@@ -1,10 +1,73 @@
 // public/assets/js/app.js
 
 // Toggle sidebar su mobile
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const THEME_STORAGE_KEY = 'coresuite_theme_mode';
-    const themeModeToggle = document.getElementById('themeModeToggle');
-    const systemThemeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
+    const themeDropdown = document.getElementById('themeDropdown');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeItems = themeDropdown ? themeDropdown.querySelectorAll('.dropdown-item[data-theme]') : [];
+
+    function setThemeIcon(theme) {
+        if (!themeIcon) return;
+        themeIcon.innerHTML = '';
+        if (theme === 'dark') themeIcon.innerHTML = '<i class="fas fa-moon"></i>';
+        else if (theme === 'system') themeIcon.innerHTML = '<i class="fas fa-desktop"></i>';
+        else themeIcon.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    function applyTheme(theme) {
+        setThemeIcon(theme);
+        if (theme === 'system') {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.removeItem('theme');
+        } else {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+        }
+    }
+
+    // Load theme on page load
+    let theme = localStorage.getItem('theme') || 'system';
+    applyTheme(theme);
+
+    themeItems.forEach(function (item) {
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            const selected = this.getAttribute('data-theme');
+            applyTheme(selected);
+        });
+    });
+});
+
+// Chart.js init
+if (window._chartValues && window._chartLabels && document.getElementById('dashboardChart')) {
+    const ctx = document.getElementById('dashboardChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: window._chartLabels,
+            datasets: [{
+                label: 'Ticket ultimi 30 giorni',
+                data: window._chartValues,
+                borderColor: '#3273dc',
+                backgroundColor: 'rgba(50,115,220,0.1)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: false }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Data' } },
+                y: { title: { display: true, text: 'Ticket' }, beginAtZero: true }
+            }
+        }
+    });
 
     const applyThemeMode = function(mode) {
         const selectedMode = mode || 'light';
@@ -170,11 +233,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Etichette asse Y
             ctx.fillStyle = '#666';
             ctx.textAlign = 'right';
-            for (let i = 0; i <= 4; i++) {
-                const val = Math.round((max / 4) * i);
-                const y = height - padding - ((val / max) * (height - padding - 10));
+                for (let i = 0; i <= 4; i++) {
+                    const val = Math.round((max / 4) * i);
+                    const y = height - padding - (val / max) * (height - padding - 10);
                 ctx.fillText(val.toString(), padding - 5, y + 4);
             }
         }
     }
-});
+};
