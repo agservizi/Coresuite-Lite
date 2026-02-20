@@ -26,35 +26,14 @@ $displayName = $currentUser['name'] ?? 'Utente';
         <a class="navbar-item" href="/dashboard">
             <strong>CoreSuite Lite</strong>
         </a>
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenuUser">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
 
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item <?php echo $isActivePath('/dashboard') ? 'is-active' : ''; ?>" href="/dashboard">
-                <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
-                Dashboard
-            </a>
-            <?php if ($isAdmin): ?>
-            <a class="navbar-item <?php echo $isActivePath('/admin/users', true) ? 'is-active' : ''; ?>" href="/admin/users">
-                <span class="icon"><i class="fas fa-users"></i></span>
-                Utenti
-            </a>
-            <?php endif; ?>
-            <a class="navbar-item <?php echo $isActivePath('/tickets', true) ? 'is-active' : ''; ?>" href="/tickets">
-                <span class="icon"><i class="fas fa-ticket-alt"></i></span>
-                Tickets
-            </a>
-            <a class="navbar-item <?php echo $isActivePath('/documents', true) ? 'is-active' : ''; ?>" href="/documents">
-                <span class="icon"><i class="fas fa-file"></i></span>
-                Documenti
-            </a>
-        </div>
-
+    <div id="navbarMenuUser" class="navbar-menu">
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="select is-small theme-mode-select">
@@ -65,7 +44,6 @@ $displayName = $currentUser['name'] ?? 'Utente';
                     </select>
                 </div>
             </div>
-
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                     <span class="icon"><i class="fas fa-user"></i></span>
