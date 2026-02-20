@@ -14,8 +14,6 @@
     <?php include __DIR__ . '/partials/sidebar.php'; ?>
 
     <div class="main-content">
-        <?php include __DIR__ . '/partials/breadcrumbs.php'; ?>
-
         <section class="section">
             <div class="container">
                 <?php include __DIR__ . '/partials/flash.php'; ?>
