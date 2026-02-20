@@ -1,3 +1,12 @@
+/* Sidebar: migliora contrasto testo su hover/active */
+.sidebar .menu-list a:hover,
+.sidebar .menu-list a.is-active,
+.sidebar .menu-list li.is-active > a,
+.sidebar .menu-list a:focus {
+    color: #fff !important;
+    background-color: #3273dc !important;
+    text-shadow: none;
+}
 /* public/assets/css/theme.css */
 
 /* Variabili CSS per tema scuro */
