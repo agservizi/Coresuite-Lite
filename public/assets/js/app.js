@@ -25,11 +25,25 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem(COLLAPSE_KEY, collapsed ? '1' : '0');
     }
 
-    // Collapse/expand desktop
+    // Collapse/expand desktop e mobile, anche su resize
+    function syncSidebarState() {
+        if (!sidebar) return;
+        if (window.innerWidth > 768) {
+            // Desktop: chiudi overlay, ripristina collapse
+            sidebar.classList.remove('is-active');
+            if (overlay) overlay.classList.remove('is-active');
+            const collapsed = localStorage.getItem(COLLAPSE_KEY) === '1';
+            setSidebarCollapsed(collapsed);
+        } else {
+            // Mobile: sidebar sempre espansa, no collapse
+            sidebar.classList.remove('collapsed');
+            // (overlay e is-active gestiti dal click)
+        }
+    }
+
     if (collapseBtn && sidebar) {
         collapseBtn.addEventListener('click', function (e) {
             e.preventDefault();
-            // Se mobile: apri/chiudi sidebar come overlay
             if (window.innerWidth <= 768) {
                 sidebar.classList.toggle('is-active');
                 if (overlay) overlay.classList.toggle('is-active');
@@ -38,11 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 setSidebarCollapsed(collapsed);
             }
         });
-        // On load, restore state solo desktop
-        if (window.innerWidth > 768) {
-            const collapsed = localStorage.getItem(COLLAPSE_KEY) === '1';
-            setSidebarCollapsed(collapsed);
-        }
+        // All'avvio: sincronizza stato
+        syncSidebarState();
+        // Aggiorna su resize
+        window.addEventListener('resize', syncSidebarState);
     }
 
     // Overlay click chiude sidebar mobile
