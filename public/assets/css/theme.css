@@ -1,11 +1,21 @@
 /* Sidebar: migliora contrasto testo su hover/active */
+/* Sidebar: testo sempre chiaro e contrastato su hover/active */
 .sidebar .menu-list a:hover,
+.sidebar .menu-list a:focus,
 .sidebar .menu-list a.is-active,
-.sidebar .menu-list li.is-active > a,
-.sidebar .menu-list a:focus {
+.sidebar .menu-list li.is-active > a {
     color: #fff !important;
-    background-color: #3273dc !important;
-    text-shadow: none;
+    background-color: #2563eb !important; /* blu più scuro per contrasto */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+    outline: none;
+}
+
+/* Sidebar: testo sempre chiaro anche su link attivi */
+.sidebar .menu-list a.is-active,
+.sidebar .menu-list li.is-active > a {
+    color: #fff !important;
+    background-color: #1d4ed8 !important; /* ancora più scuro per active */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.22);
 }
 /* public/assets/css/theme.css */
 
