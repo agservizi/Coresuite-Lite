@@ -27,6 +27,33 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem(COLLAPSE_KEY, collapsed ? '1' : '0');
     }
 
+    // Invia log toggle al server via AJAX
+    function sendSidebarToggleLog(action, mode) {
+        try {
+            const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+            const csrf = tokenMeta ? tokenMeta.getAttribute('content') : '';
+
+            fetch('/api/ui/sidebar-toggle', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': csrf
+                },
+                body: JSON.stringify({ action: action, mode: mode })
+            }).then(res => {
+                // opzionale: gestire response
+                return res.json().catch(() => ({}));
+            }).then(json => {
+                // silent success
+            }).catch(err => {
+                console.warn('[Sidebar] Log send failed', err);
+            });
+        } catch (e) {
+            console.warn('[Sidebar] Log send exception', e);
+        }
+    }
+
     // Collapse/expand desktop e mobile, anche su resize
     function syncSidebarState() {
         if (!sidebar) return;
@@ -75,7 +102,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const wasActive = sidebar.classList.contains('is-active');
             sidebar.classList.toggle('is-active');
             if (overlay) overlay.classList.toggle('is-active');
-            console.log(wasActive ? '[Sidebar] Chiusa (mobile overlay)' : '[Sidebar] Aperta (mobile overlay)');
+            const action = wasActive ? 'close' : 'open';
+            console.log(action === 'close' ? '[Sidebar] Chiusa (mobile overlay)' : '[Sidebar] Aperta (mobile overlay)');
+            sendSidebarToggleLog(action, 'mobile');
             if (btn) btn.setAttribute('aria-expanded', sidebar.classList.contains('is-active') ? 'true' : 'false');
             return;
         }
@@ -83,6 +112,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Desktop: collapse/expand
         const collapsed = !sidebar.classList.contains('collapsed');
         setSidebarCollapsed(collapsed);
+        sendSidebarToggleLog(collapsed ? 'collapse' : 'expand', 'desktop');
         if (btn) btn.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
     }
 

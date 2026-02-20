@@ -155,5 +155,8 @@ class Router {
             $this->add('GET', '/install', 'Install@index');
             $this->add('POST', '/install', 'Install@setup');
         }
+
+        // UI AJAX routes (client-side interactions logging)
+        $this->add('POST', '/api/ui/sidebar-toggle', 'UI@sidebarToggle', ['middleware' => ['Auth']]);
     }
 }
