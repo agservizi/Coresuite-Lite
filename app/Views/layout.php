@@ -17,13 +17,13 @@
         <section class="section">
             <div class="container">
                 <?php include __DIR__ . '/partials/flash.php'; ?>
-
                 <h1 class="title"><?php echo $pageTitle ?? 'Dashboard'; ?></h1>
-
                 <?php echo $content ?? ''; ?>
             </div>
         </section>
     </div>
+
+    <?php include __DIR__ . '/partials/footer.php'; ?>
 
     <script src="/assets/js/app.js"></script>
 </body>

@@ -20,46 +20,39 @@ try {
 }
 ?>
 <aside class="sidebar" id="sidebar">
+    <button id="sidebarCollapseBtn" class="sidebar-collapse-btn" title="Comprimi/espandi sidebar">
+        <span class="icon"><i class="fas fa-angle-double-left"></i></span>
+    </button>
     <nav class="menu">
-        <p class="menu-label">
-            Generale
-        </p>
+        <p class="menu-label sidebar-label">Generale</p>
         <ul class="menu-list">
-            <li><a class="<?php echo $isActivePath('/dashboard') ? 'is-active' : ''; ?>" href="/dashboard"><span class="icon"><i class="fas fa-tachometer-alt"></i></span> Dashboard</a></li>
+            <li><a class="<?php echo $isActivePath('/dashboard') ? 'is-active' : ''; ?>" href="/dashboard"><span class="icon"><i class="fas fa-tachometer-alt"></i></span> <span class="sidebar-text">Dashboard</span></a></li>
         </ul>
 
         <?php if ($isAdmin): ?>
-        <p class="menu-label">
-            Amministrazione
-        </p>
+        <p class="menu-label sidebar-label">Amministrazione</p>
         <ul class="menu-list">
-            <li><a class="<?php echo $isActivePath('/admin/users', true) ? 'is-active' : ''; ?>" href="/admin/users"><span class="icon"><i class="fas fa-users"></i></span> Gestione Utenti</a></li>
-            <li><a class="<?php echo $isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents/upload"><span class="icon"><i class="fas fa-upload"></i></span> Carica Documento</a></li>
+            <li><a class="<?php echo $isActivePath('/admin/users', true) ? 'is-active' : ''; ?>" href="/admin/users"><span class="icon"><i class="fas fa-users"></i></span> <span class="sidebar-text">Gestione Utenti</span></a></li>
+            <li><a class="<?php echo $isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents/upload"><span class="icon"><i class="fas fa-upload"></i></span> <span class="sidebar-text">Carica Documento</span></a></li>
         </ul>
         <?php endif; ?>
 
-        <p class="menu-label">
-            Supporto
-        </p>
+        <p class="menu-label sidebar-label">Supporto</p>
         <ul class="menu-list">
-            <li><a class="<?php echo $isActivePath('/tickets', true) ? 'is-active' : ''; ?>" href="/tickets"><span class="icon"><i class="fas fa-ticket-alt"></i></span> Le mie richieste</a></li>
+            <li><a class="<?php echo $isActivePath('/tickets', true) ? 'is-active' : ''; ?>" href="/tickets"><span class="icon"><i class="fas fa-ticket-alt"></i></span> <span class="sidebar-text">Le mie richieste</span></a></li>
             <?php if ($isCustomer): ?>
-            <li><a class="<?php echo $isActivePath('/tickets/create') ? 'is-active' : ''; ?>" href="/tickets/create"><span class="icon"><i class="fas fa-plus"></i></span> Nuova richiesta</a></li>
+            <li><a class="<?php echo $isActivePath('/tickets/create') ? 'is-active' : ''; ?>" href="/tickets/create"><span class="icon"><i class="fas fa-plus"></i></span> <span class="sidebar-text">Nuova richiesta</span></a></li>
             <?php endif; ?>
         </ul>
 
-        <p class="menu-label">
-            Documenti
-        </p>
+        <p class="menu-label sidebar-label">Documenti</p>
         <ul class="menu-list">
-            <li><a class="<?php echo $isActivePath('/documents', true) && !$isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents"><span class="icon"><i class="fas fa-file"></i></span> I miei documenti</a></li>
+            <li><a class="<?php echo $isActivePath('/documents', true) && !$isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents"><span class="icon"><i class="fas fa-file"></i></span> <span class="sidebar-text">I miei documenti</span></a></li>
         </ul>
 
-        <p class="menu-label">
-            Account
-        </p>
+        <p class="menu-label sidebar-label">Account</p>
         <ul class="menu-list">
-            <li><a class="<?php echo $isActivePath('/profile') ? 'is-active' : ''; ?>" href="/profile"><span class="icon"><i class="fas fa-user-cog"></i></span> Profilo</a></li>
+            <li><a class="<?php echo $isActivePath('/profile') ? 'is-active' : ''; ?>" href="/profile"><span class="icon"><i class="fas fa-user-cog"></i></span> <span class="sidebar-text">Profilo</span></a></li>
         </ul>
     </nav>
 </aside>

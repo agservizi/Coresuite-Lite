@@ -1,7 +1,36 @@
 // public/assets/js/app.js
 
-// Toggle sidebar su mobile
+// Toggle sidebar su mobile e collapse desktop
 document.addEventListener('DOMContentLoaded', function () {
+        // Sidebar collapse logic
+        const sidebar = document.getElementById('sidebar');
+        const collapseBtn = document.getElementById('sidebarCollapseBtn');
+        const sidebarTextEls = document.querySelectorAll('.sidebar-text');
+        const sidebarLabels = document.querySelectorAll('.sidebar-label');
+        const COLLAPSE_KEY = 'coresuite_sidebar_collapsed';
+
+        function setSidebarCollapsed(collapsed) {
+            if (collapsed) {
+                sidebar.classList.add('collapsed');
+                collapseBtn.querySelector('i').classList.remove('fa-angle-double-left');
+                collapseBtn.querySelector('i').classList.add('fa-angle-double-right');
+            } else {
+                sidebar.classList.remove('collapsed');
+                collapseBtn.querySelector('i').classList.remove('fa-angle-double-right');
+                collapseBtn.querySelector('i').classList.add('fa-angle-double-left');
+            }
+            localStorage.setItem(COLLAPSE_KEY, collapsed ? '1' : '0');
+        }
+
+        if (collapseBtn && sidebar) {
+            collapseBtn.addEventListener('click', function () {
+                const collapsed = !sidebar.classList.contains('collapsed');
+                setSidebarCollapsed(collapsed);
+            });
+            // On load, restore state
+            const collapsed = localStorage.getItem(COLLAPSE_KEY) === '1';
+            setSidebarCollapsed(collapsed);
+        }
     const THEME_STORAGE_KEY = 'coresuite_theme_mode';
     const themeDropdown = document.getElementById('themeDropdown');
     const themeIcon = document.getElementById('themeIcon');
