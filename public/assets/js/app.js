@@ -15,12 +15,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 collapseBtn.querySelector('i').classList.add('fa-bars-staggered');
                 collapseBtn.querySelector('i').classList.remove('fa-bars');
             }
+            console.log('[Sidebar] Collassata (desktop)');
         } else {
             sidebar.classList.remove('collapsed');
             if (collapseBtn) {
                 collapseBtn.querySelector('i').classList.remove('fa-bars-staggered');
                 collapseBtn.querySelector('i').classList.add('fa-bars');
             }
+            console.log('[Sidebar] Espansa (desktop)');
         }
         localStorage.setItem(COLLAPSE_KEY, collapsed ? '1' : '0');
     }
@@ -45,8 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
         collapseBtn.addEventListener('click', function (e) {
             e.preventDefault();
             if (window.innerWidth <= 768) {
+                const wasActive = sidebar.classList.contains('is-active');
                 sidebar.classList.toggle('is-active');
                 if (overlay) overlay.classList.toggle('is-active');
+                if (!wasActive && sidebar.classList.contains('is-active')) {
+                    console.log('[Sidebar] Aperta (mobile overlay)');
+                } else if (wasActive && !sidebar.classList.contains('is-active')) {
+                    console.log('[Sidebar] Chiusa (mobile overlay)');
+                }
             } else {
                 const collapsed = !sidebar.classList.contains('collapsed');
                 setSidebarCollapsed(collapsed);
