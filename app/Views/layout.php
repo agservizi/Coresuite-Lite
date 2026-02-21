@@ -9,10 +9,8 @@
     <link rel="stylesheet" href="/assets/css/theme.css">
     <meta name="csrf-token" content="<?php echo htmlspecialchars(\CSRF::generateToken()); ?>">
 </head>
-<body class="app-layout has-sidebar">
+<body class="app-layout">
     <?php include __DIR__ . '/partials/topbar.php'; ?>
-    <div class="sidebar-overlay"></div>
-    <?php include __DIR__ . '/partials/sidebar.php'; ?>
 
     <div class="main-content">
         <section class="section">

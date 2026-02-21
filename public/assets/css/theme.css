@@ -1,24 +1,4 @@
-/* Toggle collapse nella topbar */
-.sidebar-collapse-btn.topbar-toggle {
-    margin-right: 0.5rem;
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 1.35rem;
-    padding: 0.35rem 0.6rem;
-    border-radius: 6px;
-    transition: background 0.18s, color 0.18s;
-    box-shadow: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.sidebar-collapse-btn.topbar-toggle:hover,
-.sidebar-collapse-btn.topbar-toggle:focus {
-    background: rgba(255,255,255,0.12);
-    color: #ffd700;
-}
+/* Collapse button removed — styles not needed when sidebar is disabled */
 
 /* Pulsante toggle tema */
 .theme-toggle-btn {
@@ -61,20 +41,17 @@
 .main-content {
     transition: margin-left 0.2s, width 0.2s;
 }
-body.has-sidebar > .sidebar.collapsed + .main-content {
-    margin-left: 60px;
-    width: calc(100vw - 60px);
-}
-body.has-sidebar > .sidebar.collapsed + .main-content + .global-footer {
-    left: 60px;
-    width: calc(100vw - 60px);
-}
+/* Removed dependency on body.has-sidebar; pages are full-width */
+
+/* Supporto alternativo: applicare stile quando `body` ha la classe sidebar-collapsed
+   (più robusto rispetto a selettori che richiedono elementi adiacenti) */
+/* Sidebar-specific collapsed styles removed (not used). */
 /* Footer globale */
 .global-footer {
     position: fixed;
-    left: var(--sidebar-width);
+    left: 0;
     bottom: 0;
-    width: calc(100vw - var(--sidebar-width));
+    width: 100vw;
     height: 48px;
     background: var(--bg-secondary);
     color: var(--text-secondary);
@@ -160,7 +137,7 @@ body {
 }
 
 
-body.app-layout.has-sidebar {
+body.app-layout {
     padding-top: 0;
     padding-left: 0;
     margin: 0;
@@ -180,24 +157,11 @@ body.app-layout.has-sidebar {
     z-index: 40;
 }
 
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--sidebar-width);
-    height: 100vh;
-    background-color: var(--sidebar-bg);
-    padding: 1rem 0.5rem;
-    overflow-y: auto;
-    z-index: 30;
-    transition: width 0.18s ease, transform 0.18s ease;
-}
-
 .main-content {
-    margin-left: var(--sidebar-width);
+    margin-left: 0;
     padding: 0;
     min-height: 100vh;
-    width: calc(100vw - var(--sidebar-width));
+    width: 100vw;
     box-sizing: border-box;
     background: var(--bg-primary);
 }

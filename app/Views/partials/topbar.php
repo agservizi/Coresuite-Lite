@@ -19,14 +19,18 @@ try {
     $isAdmin = false;
 }
 
+$isCustomer = false;
+try {
+    $isCustomer = Auth::isCustomer();
+} catch (\Throwable $e) {
+    $isCustomer = false;
+}
+
 $displayName = $currentUser['name'] ?? 'Utente';
 ?>
 
 <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-        <button id="sidebarCollapseBtn" class="sidebar-collapse-btn topbar-toggle" title="Comprimi/espandi sidebar">
-            <span class="icon"><i class="fas fa-bars"></i></span>
-        </button>
         <a class="navbar-item" href="/dashboard">
             <strong>CoreSuite Lite</strong>
         </a>
@@ -38,6 +42,60 @@ $displayName = $currentUser['name'] ?? 'Utente';
     </div>
 
     <div id="navbarMenuUser" class="navbar-menu">
+        <div class="navbar-start">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    <span class="icon"><i class="fas fa-bars"></i></span>
+                    Menu
+                </a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item <?php echo $isActivePath('/dashboard') ? 'is-active' : ''; ?>" href="/dashboard">
+                        <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                        Dashboard
+                    </a>
+                    <?php if ($isAdmin): ?>
+                    <hr class="navbar-divider">
+                    <div class="navbar-item has-text-weight-semibold is-size-7">Amministrazione</div>
+                    <a class="navbar-item <?php echo $isActivePath('/admin/users', true) ? 'is-active' : ''; ?>" href="/admin/users">
+                        <span class="icon"><i class="fas fa-users"></i></span>
+                        Gestione Utenti
+                    </a>
+                    <a class="navbar-item <?php echo $isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents/upload">
+                        <span class="icon"><i class="fas fa-upload"></i></span>
+                        Carica Documento
+                    </a>
+                    <?php endif; ?>
+
+                    <hr class="navbar-divider">
+                    <div class="navbar-item has-text-weight-semibold is-size-7">Supporto</div>
+                    <a class="navbar-item <?php echo $isActivePath('/tickets', true) ? 'is-active' : ''; ?>" href="/tickets">
+                        <span class="icon"><i class="fas fa-ticket-alt"></i></span>
+                        Le mie richieste
+                    </a>
+                    <?php if ($isCustomer): ?>
+                    <a class="navbar-item <?php echo $isActivePath('/tickets/create') ? 'is-active' : ''; ?>" href="/tickets/create">
+                        <span class="icon"><i class="fas fa-plus"></i></span>
+                        Nuova richiesta
+                    </a>
+                    <?php endif; ?>
+
+                    <hr class="navbar-divider">
+                    <div class="navbar-item has-text-weight-semibold is-size-7">Documenti</div>
+                    <a class="navbar-item <?php echo ($isActivePath('/documents', true) && !$isActivePath('/documents/upload')) ? 'is-active' : ''; ?>" href="/documents">
+                        <span class="icon"><i class="fas fa-file"></i></span>
+                        I miei documenti
+                    </a>
+
+                    <hr class="navbar-divider">
+                    <div class="navbar-item has-text-weight-semibold is-size-7">Account</div>
+                    <a class="navbar-item <?php echo $isActivePath('/profile') ? 'is-active' : ''; ?>" href="/profile">
+                        <span class="icon"><i class="fas fa-user-cog"></i></span>
+                        Profilo
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="dropdown is-right is-hoverable" id="themeDropdown">

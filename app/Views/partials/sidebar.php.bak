@@ -1,0 +1,9 @@
+<?php // Backup of sidebar.php — archived after moving content to topbar
+/* Original sidebar markup archived. Keep as reference or delete if not needed. */
+?>
+
+<!-- Archived sidebar: do not include this file in layout -->
+
+<?php
+// Original content moved into topbar.php
+?>
