@@ -2,29 +2,25 @@
 $pageTitle = 'Tickets';
 
 $content = '
-<div class="level">
-    <div class="level-left">
-        <div class="level-item"><p class="subtitle is-6">Elenco richieste di assistenza</p></div>
-    </div>
-    <div class="level-right">
-        <div class="level-item"><a href="/tickets/create" class="button is-primary">Nuovo Ticket</a></div>
-    </div>
+<div class="flex items-center justify-between mb-4">
+    <div class="text-sm text-gray-600">Elenco richieste di assistenza</div>
+    <a href="/tickets/create" class="px-3 py-2 bg-blue-600 text-white rounded">Nuovo Ticket</a>
 </div>
 
-<div class="table-container">
-<table class="table is-fullwidth is-hoverable">
-    <thead>
+<div class="overflow-x-auto bg-white border rounded">
+<table class="min-w-full divide-y">
+    <thead class="bg-gray-50">
         <tr>
-            <th>#</th>
-            <th>Oggetto</th>
-            <th>Categoria</th>
-            <th>Priorità</th>
-            <th>Stato</th>
-            <th>Data</th>
-            <th></th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">#</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Oggetto</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Categoria</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Priorità</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Stato</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Data</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600"></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="divide-y">
 ';
 
 foreach (($tickets ?? []) as $ticket) {
@@ -34,13 +30,13 @@ foreach (($tickets ?? []) as $ticket) {
     $priorityTag = $priority === 'high' ? 'is-danger' : ($priority === 'low' ? 'is-light' : 'is-warning');
     $content .= '
         <tr>
-            <td>' . (int)($ticket['id'] ?? 0) . '</td>
-            <td>' . htmlspecialchars($ticket['subject'] ?? '(senza oggetto)') . '</td>
-            <td>' . htmlspecialchars($ticket['category'] ?? '-') . '</td>
-            <td><span class="tag ' . $priorityTag . '">' . htmlspecialchars($priority) . '</span></td>
-            <td><span class="tag ' . $statusTag . '">' . htmlspecialchars($status) . '</span></td>
-            <td>' . htmlspecialchars($ticket['created_at'] ?? '-') . '</td>
-            <td><a class="button is-small is-link is-light" href="/tickets/' . (int)($ticket['id'] ?? 0) . '">Apri</a></td>
+            <td class="px-4 py-2">' . (int)($ticket['id'] ?? 0) . '</td>
+            <td class="px-4 py-2">' . htmlspecialchars($ticket['subject'] ?? '(senza oggetto)') . '</td>
+            <td class="px-4 py-2">' . htmlspecialchars($ticket['category'] ?? '-') . '</td>
+            <td class="px-4 py-2"><span class="inline-block px-2 py-0.5 text-sm rounded ' . ($priority === 'high' ? 'bg-red-100 text-red-800' : ($priority === 'low' ? 'bg-gray-100 text-gray-800' : 'bg-yellow-100 text-yellow-800')) . '">' . htmlspecialchars($priority) . '</span></td>
+            <td class="px-4 py-2"><span class="inline-block px-2 py-0.5 text-sm rounded ' . ($status === 'closed' ? 'bg-green-100 text-green-800' : ($status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' : ($status === 'resolved' ? 'bg-blue-100 text-blue-800' : 'bg-indigo-100 text-indigo-800'))) . '">' . htmlspecialchars($status) . '</span></td>
+            <td class="px-4 py-2">' . htmlspecialchars($ticket['created_at'] ?? '-') . '</td>
+            <td class="px-4 py-2"><a class="px-2 py-1 bg-gray-100 rounded" href="/tickets/' . (int)($ticket['id'] ?? 0) . '">Apri</a></td>
         </tr>
     ';
 }

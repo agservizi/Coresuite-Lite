@@ -2,56 +2,29 @@
 use Core\Auth;
 
 $pageTitle = 'Dashboard';
-
 $content = '
-<div class="columns is-multiline">
-    <div class="column is-3">
-        <div class="card">
-            <div class="card-content">
-                <div class="content">
-                    <p class="title is-2">' . (int)($customersCount ?? 0) . '</p>
-                    <p class="subtitle">Clienti</p>
-                </div>
-            </div>
-        </div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+    <div class="bg-white border rounded p-4 shadow-sm">
+        <p class="text-2xl font-semibold">' . (int)($customersCount ?? 0) . '</p>
+        <p class="text-sm text-gray-600">Clienti</p>
     </div>
-    <div class="column is-3">
-        <div class="card">
-            <div class="card-content">
-                <div class="content">
-                    <p class="title is-2">' . (int)($ticketsCount ?? 0) . '</p>
-                    <p class="subtitle">Totale Tickets</p>
-                </div>
-            </div>
-        </div>
+    <div class="bg-white border rounded p-4 shadow-sm">
+        <p class="text-2xl font-semibold">' . (int)($ticketsCount ?? 0) . '</p>
+        <p class="text-sm text-gray-600">Totale Tickets</p>
     </div>
-    <div class="column is-3">
-        <div class="card">
-            <div class="card-content">
-                <div class="content">
-                    <p class="title is-2">' . (int)($openTicketsCount ?? 0) . '</p>
-                    <p class="subtitle">Tickets Aperti</p>
-                </div>
-            </div>
-        </div>
+    <div class="bg-white border rounded p-4 shadow-sm">
+        <p class="text-2xl font-semibold">' . (int)($openTicketsCount ?? 0) . '</p>
+        <p class="text-sm text-gray-600">Tickets Aperti</p>
     </div>
-    <div class="column is-3">
-        <div class="card">
-            <div class="card-content">
-                <div class="content">
-                    <p class="title is-2">' . (int)($documentsCount ?? 0) . '</p>
-                    <p class="subtitle">Documenti</p>
-                </div>
-            </div>
-        </div>
+    <div class="bg-white border rounded p-4 shadow-sm">
+        <p class="text-2xl font-semibold">' . (int)($documentsCount ?? 0) . '</p>
+        <p class="text-sm text-gray-600">Documenti</p>
     </div>
 </div>
 
-<div class="card mb-5">
-    <header class="card-header">
-        <p class="card-header-title">Grafico Tickets (ultimi 30 giorni)</p>
-    </header>
-    <div class="card-content">
+<div class="bg-white border rounded mb-5 shadow-sm">
+    <div class="border-b px-4 py-2 font-medium">Grafico Tickets (ultimi 30 giorni)</div>
+    <div class="p-4">
         <canvas id="ticketChart" width="400" height="200"></canvas>
     </div>
 </div>
@@ -60,14 +33,10 @@ $content = '
     window._chartValues = ' . json_encode($chartValues ?? []) . ';
 </script>
 
-<div class="columns">
-    <div class="column is-6">
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">Ultime Richieste</p>
-            </header>
-            <div class="card-content">
-                <div class="content">';
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="bg-white border rounded shadow-sm">
+        <div class="px-4 py-3 border-b font-medium">Ultime Richieste</div>
+        <div class="p-4">';
 
 if (!empty($latestTickets)) {
     $content .= '<ul>';
@@ -85,13 +54,9 @@ $content .= '
             </div>
         </div>
     </div>
-    <div class="column is-6">
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">Ultimi Upload</p>
-            </header>
-            <div class="card-content">
-                <div class="content">';
+    <div class="bg-white border rounded shadow-sm">
+        <div class="px-4 py-3 border-b font-medium">Ultimi Upload</div>
+        <div class="p-4">';
 
 if (!empty($latestDocuments)) {
     $content .= '<ul>';
