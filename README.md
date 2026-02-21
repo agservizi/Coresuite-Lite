@@ -7,7 +7,7 @@ Client Portal + Admin Dashboard - Vendibile su Envato
 - **Backend**: PHP 8.2+ puro
 - **Database**: MySQL 8+
 - **Frontend**: HTML5 + CSS3 + Vanilla JS
-- **UI**: Bulma Admin con tema scuro
+- **UI**: Tailwind CSS con variabili di tema scuro in `public/assets/css/theme.css`
 - **Sicurezza**: CSRF, prepared statements, session hardening
 
 ## Installazione

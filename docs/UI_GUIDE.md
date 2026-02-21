@@ -1,8 +1,8 @@
 # Guida UI - CoreSuite Lite
 
-## Tema Scuro Bulma
+## Tema Scuro (Tailwind)
 
-Il tema utilizza Bulma con override CSS personalizzati per un look moderno e scuro.
+Il tema ora utilizza Tailwind CSS con variabili CSS personalizzate in `public/assets/css/theme.css` per gestire tonalità e colori del tema scuro.
 
 ### Variabili CSS
 
@@ -14,7 +14,7 @@ Il tema utilizza Bulma con override CSS personalizzati per un look moderno e scu
     --text-primary: #ffffff;    /* Testo principale */
     --text-secondary: #cccccc;  /* Testo secondario */
     --border-color: #444444;    /* Bordi */
-    --primary-color: #3273dc;   /* Bulma primary */
+    --primary-color: #3273dc;
     --success-color: #48c774;   /* Success */
     --warning-color: #ffdd57;   /* Warning */
     --danger-color: #f14668;    /* Danger */

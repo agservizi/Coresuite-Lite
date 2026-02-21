@@ -123,9 +123,9 @@ opcache.max_accelerated_files=4000
 opcache.revalidate_freq=60
 ```
 
-### CDN
+-### CDN
 Servi assets statici da CDN:
-- jsDelivr per Bulma/FontAwesome
+- FontAwesome via CDN (usato per le icone)
 - CloudFlare per assets personalizzati
 
 ### Caching

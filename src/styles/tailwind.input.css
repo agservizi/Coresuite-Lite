@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Project custom utilities or layer overrides can be added here */
+/* Example: preserve theme variables from theme.css by not resetting them */

@@ -137,7 +137,7 @@
     --sidebar-border: #444444;
 }
 
-/* Override Bulma per tema scuro */
+/* Theme variables and overrides (coexists with Tailwind) */
 body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
