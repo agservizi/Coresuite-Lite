@@ -28,6 +28,16 @@ class DocumentController {
             $stmt->execute([$perPage, $offset]);
         }
         $documents = $stmt->fetchAll();
+        // Attach metadata if exists
+        foreach ($documents as &$d) {
+            $metaPath = __DIR__ . '/../../storage/uploads/' . ($d['filename_storage'] ?? '') . '.json';
+            if (file_exists($metaPath)) {
+                $json = file_get_contents($metaPath);
+                $d['meta'] = json_decode($json, true);
+            } else {
+                $d['meta'] = null;
+            }
+        }
         $totalPages = max(1, ceil($total / $perPage));
 
         include __DIR__ . '/../Views/documents.php';
@@ -52,6 +62,8 @@ class DocumentController {
         }
 
         $customerId = $_POST['customer_id'] ?? '';
+        $description = trim($_POST['description'] ?? '');
+        $tags = trim($_POST['tags'] ?? '');
         $file = $_FILES['file'] ?? null;
 
         if (empty($customerId) || !$file || $file['error'] !== UPLOAD_ERR_OK) {
@@ -98,9 +110,24 @@ class DocumentController {
             $user = Auth::user();
             $stmt = DB::prepare("INSERT INTO documents (customer_id, filename_original, filename_storage, mime, size, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([$customerId, $file['name'], $filenameStorage, $detectedMime, $file['size'], $user['id']]);
-
             $docId = DB::lastInsertId();
             Auth::logAction('upload', 'document', $docId);
+
+            // Save metadata JSON alongside the file for advanced document management
+            try {
+                $meta = [
+                    'doc_id' => $docId,
+                    'original_name' => $file['name'],
+                    'uploaded_by' => $user['id'],
+                    'uploaded_at' => date('c'),
+                    'description' => $description,
+                    'tags' => array_values(array_filter(array_map('trim', explode(',', $tags))))
+                ];
+                $metaPath = __DIR__ . '/../../storage/uploads/' . $filenameStorage . '.json';
+                file_put_contents($metaPath, json_encode($meta, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            } catch (\Throwable $e) {
+                // ignore metadata write errors
+            }
             Auth::flash('Documento caricato con successo.', 'success');
             header('Location: /documents');
             exit;

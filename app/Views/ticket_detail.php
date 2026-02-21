@@ -74,6 +74,21 @@ if ($canManageStatus) {
     ';
 }
 
+
+// Attachments section
+$content .= '<div class="box mb-4"><p class="title is-6">Allegati</p>';
+if (!empty($attachments)) {
+    $content .= '<ul>';
+    foreach ($attachments as $att) {
+        $link = '/storage/tickets/' . htmlspecialchars($att['stored_name']);
+        $content .= '<li><a href="' . $link . '" target="_blank">' . htmlspecialchars($att['original_name']) . '</a> <small class="has-text-grey">(' . htmlspecialchars($att['uploaded_at']) . ')</small></li>';
+    }
+    $content .= '</ul>';
+} else {
+    $content .= '<p class="has-text-grey">Nessun allegato</p>';
+}
+$content .= '</div>';
+
 $content .= '<h2 class="title is-5">Commenti</h2>';
 
 foreach (($comments ?? []) as $comment) {
@@ -97,7 +112,7 @@ if (empty($comments)) {
 }
 
 $content .= '
-<form method="POST" action="/tickets/' . (int)($ticket['id'] ?? 0) . '/comment" class="mt-5">
+<form method="POST" action="/tickets/' . (int)($ticket['id'] ?? 0) . '/comment" class="mt-5" enctype="multipart/form-data">
     ' . CSRF::field() . '
     <div class="field">
         <label class="label">Nuovo commento</label>

@@ -3,6 +3,7 @@ $pageTitle = 'Nuovo Ticket';
 
 $content = '
 <form method="POST" action="/tickets">
+<form method="POST" action="/tickets" enctype="multipart/form-data">
     ' . CSRF::field() . '
     <div class="field">
         <label class="label">Categoria</label>
@@ -42,6 +43,13 @@ $content = '
         <label class="label">Descrizione</label>
         <div class="control">
             <textarea class="textarea" name="body" rows="6" required></textarea>
+        </div>
+    </div>
+    
+    <div class="field">
+        <label class="label">Allega file (opzionale)</label>
+        <div class="control">
+            <input type="file" name="attachment">
         </div>
     </div>
 

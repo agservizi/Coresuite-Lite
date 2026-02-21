@@ -30,6 +30,20 @@ $content .= '
         <p class="help">Formati supportati: PDF, JPG, PNG, DOC, DOCX (max 10MB)</p>
     </div>
 
+    <div class="field">
+        <label class="label">Descrizione (opzionale)</label>
+        <div class="control">
+            <textarea name="description" class="textarea" placeholder="Breve descrizione o note"></textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Tags (separati da virgola)</label>
+        <div class="control">
+            <input class="input" type="text" name="tags" placeholder="fattura, 2026, cliente">
+        </div>
+    </div>
+
     <div class="field is-grouped">
         <div class="control"><button class="button is-primary" type="submit">Carica</button></div>
         <div class="control"><a class="button is-light" href="/documents">Annulla</a></div>

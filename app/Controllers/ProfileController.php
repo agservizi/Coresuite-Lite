@@ -25,6 +25,15 @@ class ProfileController {
             unset($_SESSION['flash_message'], $_SESSION['flash_type']);
         }
 
+        // Recupera ultime 20 voci audit relative all'utente (come attore o entità)
+        try {
+            $stmt = DB::prepare("SELECT * FROM audit_logs WHERE actor_id = ? OR (entity = 'user' AND entity_id = ?) ORDER BY created_at DESC LIMIT 20");
+            $stmt->execute([$user['id'], $user['id']]);
+            $activity = $stmt->fetchAll();
+        } catch (\Throwable $e) {
+            $activity = [];
+        }
+
         include __DIR__ . '/../Views/profile.php';
     }
 

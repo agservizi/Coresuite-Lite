@@ -78,6 +78,31 @@ class TicketController {
         $stmt = DB::prepare("INSERT INTO ticket_comments (ticket_id, author_id, body, visibility) VALUES (?, ?, ?, 'public')");
         $stmt->execute([$ticketId, $user['id'], $body]);
 
+        // Handle optional attachment for ticket creation
+        if (!empty($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+            try {
+                $att = $_FILES['attachment'];
+                $ext = strtolower(pathinfo($att['name'], PATHINFO_EXTENSION));
+                $storageName = bin2hex(random_bytes(12)) . '.' . $ext;
+                $dest = __DIR__ . '/../../storage/tickets/' . $storageName;
+                if (!is_dir(dirname($dest))) mkdir(dirname($dest), 0755, true);
+                move_uploaded_file($att['tmp_name'], $dest);
+                // Save meta JSON
+                $meta = [
+                    'ticket_id' => $ticketId,
+                    'original_name' => $att['name'],
+                    'stored_name' => $storageName,
+                    'uploaded_by' => $user['id'],
+                    'uploaded_at' => date('c')
+                ];
+                $metaPath = __DIR__ . '/../../storage/tickets/meta/' . $storageName . '.json';
+                if (!is_dir(dirname($metaPath))) mkdir(dirname($metaPath), 0755, true);
+                file_put_contents($metaPath, json_encode($meta, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            } catch (\Throwable $e) {
+                // ignore attachment errors
+            }
+        }
+
         Auth::logAction('create', 'ticket', $ticketId);
         Auth::flash('Ticket creato con successo.', 'success');
         header('Location: /tickets');
@@ -121,6 +146,25 @@ class TicketController {
             $operators = $stmtOp->fetchAll();
         }
 
+        // Carica eventuali allegati da storage/tickets/meta
+        $attachments = [];
+        try {
+            $metaDir = __DIR__ . '/../../storage/tickets/meta';
+            if (is_dir($metaDir)) {
+                $files = scandir($metaDir);
+                foreach ($files as $f) {
+                    if (substr($f, -5) !== '.json') continue;
+                    $json = @file_get_contents($metaDir . '/' . $f);
+                    $m = json_decode($json, true);
+                    if ($m && isset($m['ticket_id']) && $m['ticket_id'] == $id) {
+                        $attachments[] = $m;
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            $attachments = [];
+        }
+
         include __DIR__ . '/../Views/ticket_detail.php';
     }
 
@@ -153,6 +197,31 @@ class TicketController {
         $user = Auth::user();
         $stmt = DB::prepare("INSERT INTO ticket_comments (ticket_id, author_id, body, visibility) VALUES (?, ?, ?, ?)");
         $stmt->execute([$id, $user['id'], $body, $visibility]);
+
+        // Handle optional attachment for comment
+        if (!empty($_FILES['attachment']) && $_FILES['attachment']['error'] === UPLOAD_ERR_OK) {
+            try {
+                $att = $_FILES['attachment'];
+                $ext = strtolower(pathinfo($att['name'], PATHINFO_EXTENSION));
+                $storageName = bin2hex(random_bytes(12)) . '.' . $ext;
+                $dest = __DIR__ . '/../../storage/tickets/' . $storageName;
+                if (!is_dir(dirname($dest))) mkdir(dirname($dest), 0755, true);
+                move_uploaded_file($att['tmp_name'], $dest);
+                // Save meta JSON linking to ticket and latest comment
+                $meta = [
+                    'ticket_id' => $id,
+                    'comment_by' => $user['id'],
+                    'original_name' => $att['name'],
+                    'stored_name' => $storageName,
+                    'uploaded_at' => date('c')
+                ];
+                $metaPath = __DIR__ . '/../../storage/tickets/meta/' . $storageName . '.json';
+                if (!is_dir(dirname($metaPath))) mkdir(dirname($metaPath), 0755, true);
+                file_put_contents($metaPath, json_encode($meta, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+            } catch (\Throwable $e) {
+                // ignore
+            }
+        }
 
         Auth::logAction('comment', 'ticket', $id);
         header('Location: /tickets/' . $id);
