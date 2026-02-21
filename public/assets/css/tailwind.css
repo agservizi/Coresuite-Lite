@@ -612,6 +612,10 @@ video {
   right: 0px;
 }
 
+.z-50 {
+  z-index: 50;
+}
+
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -761,6 +765,10 @@ video {
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.flex-none {
+  flex: none;
 }
 
 .list-disc {

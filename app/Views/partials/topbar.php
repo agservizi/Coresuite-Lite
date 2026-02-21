@@ -28,68 +28,75 @@ try {
 $displayName = $currentUser['name'] ?? 'Utente';
 ?>
 
-<nav class="w-full bg-[var(--bg-secondary)] border-b" role="navigation" aria-label="main navigation">
+<nav class="w-full bg-[var(--bg-secondary)] border-b z-50" role="navigation" aria-label="main navigation">
     <div class="max-w-screen-xl mx-auto px-4">
-        <div class="flex items-center justify-between h-[var(--topbar-height)]">
-            <div class="flex items-center gap-4">
-                <a href="/dashboard" class="text-lg font-semibold text-[var(--text-primary)]">CoreSuite Lite</a>
-                <div class="hidden md:flex items-center gap-2">
-                    <a href="/dashboard" class="px-3 py-2 rounded hover:bg-gray-100 <?php echo $isActivePath('/dashboard') ? 'font-semibold' : ''; ?>">
-                        <i class="fas fa-tachometer-alt mr-2"></i>Dashboard
+        <div class="flex items-center h-[var(--topbar-height)]">
+            <!-- Left: Brand -->
+            <div class="flex items-center flex-none">
+                <a href="/dashboard" class="text-lg font-semibold text-[var(--text-primary)] whitespace-nowrap inline-flex items-center gap-2">
+                    <i class="fas fa-layer-group"></i>
+                    <span>CoreSuite Lite</span>
+                </a>
+            </div>
+
+            <!-- Center: Menu -->
+            <div class="flex-1 flex justify-center">
+                <div class="hidden md:flex items-center gap-4 whitespace-nowrap">
+                    <a href="/dashboard" class="inline-flex items-center gap-2 px-3 py-2 rounded <?php echo $isActivePath('/dashboard') ? 'font-semibold' : ''; ?>">
+                        <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
                     </a>
 
                     <?php if ($isAdmin): ?>
-                    <a href="/admin/users" class="px-3 py-2 rounded hover:bg-gray-100 <?php echo $isActivePath('/admin/users', true) ? 'font-semibold' : ''; ?>">
-                        <i class="fas fa-users mr-2"></i>Gestione Utenti
+                    <a href="/admin/users" class="inline-flex items-center gap-2 px-3 py-2 rounded <?php echo $isActivePath('/admin/users', true) ? 'font-semibold' : ''; ?>">
+                        <i class="fas fa-users"></i><span>Gestione Utenti</span>
                     </a>
-                    <a href="/documents/upload" class="px-3 py-2 rounded hover:bg-gray-100 <?php echo $isActivePath('/documents/upload') ? 'font-semibold' : ''; ?>">
-                        <i class="fas fa-upload mr-2"></i>Carica Documento
+                    <a href="/documents/upload" class="inline-flex items-center gap-2 px-3 py-2 rounded <?php echo $isActivePath('/documents/upload') ? 'font-semibold' : ''; ?>">
+                        <i class="fas fa-upload"></i><span>Carica Documento</span>
                     </a>
                     <?php endif; ?>
 
-                    <a href="/tickets" class="px-3 py-2 rounded hover:bg-gray-100 <?php echo $isActivePath('/tickets', true) ? 'font-semibold' : ''; ?>">
-                        <i class="fas fa-ticket-alt mr-2"></i>Le mie richieste
+                    <a href="/tickets" class="inline-flex items-center gap-2 px-3 py-2 rounded <?php echo $isActivePath('/tickets', true) ? 'font-semibold' : ''; ?>">
+                        <i class="fas fa-ticket-alt"></i><span>Le mie richieste</span>
                     </a>
                     <?php if ($isCustomer): ?>
-                    <a href="/tickets/create" class="px-3 py-2 rounded hover:bg-gray-100 <?php echo $isActivePath('/tickets/create') ? 'font-semibold' : ''; ?>">
-                        <i class="fas fa-plus mr-2"></i>Nuova richiesta
+                    <a href="/tickets/create" class="inline-flex items-center gap-2 px-3 py-2 rounded <?php echo $isActivePath('/tickets/create') ? 'font-semibold' : ''; ?>">
+                        <i class="fas fa-plus"></i><span>Nuova richiesta</span>
                     </a>
                     <?php endif; ?>
 
-                    <a href="/documents" class="px-3 py-2 rounded hover:bg-gray-100 <?php echo ($isActivePath('/documents', true) && !$isActivePath('/documents/upload')) ? 'font-semibold' : ''; ?>">
-                        <i class="fas fa-file mr-2"></i>I miei documenti
+                    <a href="/documents" class="inline-flex items-center gap-2 px-3 py-2 rounded <?php echo ($isActivePath('/documents', true) && !$isActivePath('/documents/upload')) ? 'font-semibold' : ''; ?>">
+                        <i class="fas fa-file"></i><span>I miei documenti</span>
                     </a>
 
-                    <a href="/profile" class="px-3 py-2 rounded hover:bg-gray-100 <?php echo $isActivePath('/profile') ? 'font-semibold' : ''; ?>">
-                        <i class="fas fa-user-cog mr-2"></i>Profilo
+                    <a href="/profile" class="inline-flex items-center gap-2 px-3 py-2 rounded <?php echo $isActivePath('/profile') ? 'font-semibold' : ''; ?>">
+                        <i class="fas fa-user-cog"></i><span>Profilo</span>
                     </a>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <div class="hidden md:flex items-center gap-2">
-                    <div class="relative">
-                        <button id="themeToggleBtn" class="theme-toggle-btn" title="Tema">
-                            <span class="icon" id="themeIcon"><i class="fas fa-sun"></i></span>
-                            <span class="ml-2 hidden sm:inline">Tema</span>
-                        </button>
-                        <div id="themeMenu" class="absolute right-0 mt-2 w-36 bg-[var(--bg-secondary)] border rounded shadow-sm hidden">
-                            <a href="#" data-theme="light" class="block px-3 py-2 text-sm">Light</a>
-                            <a href="#" data-theme="dark" class="block px-3 py-2 text-sm">Dark</a>
-                            <a href="#" data-theme="system" class="block px-3 py-2 text-sm">System</a>
-                        </div>
+            <!-- Right: Theme + User -->
+            <div class="flex items-center gap-3 flex-none">
+                <div class="relative">
+                    <button id="themeToggleBtn" class="theme-toggle-btn inline-flex items-center gap-2" title="Tema">
+                        <i class="fas fa-sun"></i>
+                        <span class="hidden sm:inline">Tema</span>
+                    </button>
+                    <div id="themeMenu" class="absolute right-0 mt-2 w-36 bg-[var(--bg-secondary)] border rounded shadow-sm hidden">
+                        <a href="#" data-theme="light" class="block px-3 py-2 text-sm">Light</a>
+                        <a href="#" data-theme="dark" class="block px-3 py-2 text-sm">Dark</a>
+                        <a href="#" data-theme="system" class="block px-3 py-2 text-sm">System</a>
                     </div>
+                </div>
 
-                    <div class="relative">
-                        <button id="userMenuBtn" class="px-3 py-2 rounded hover:bg-gray-100 flex items-center gap-2">
-                            <i class="fas fa-user"></i>
-                            <span><?php echo htmlspecialchars($displayName); ?></span>
-                        </button>
-                        <div id="userMenu" class="absolute right-0 mt-2 w-40 bg-[var(--bg-secondary)] border rounded shadow-sm hidden">
-                            <a href="/profile" class="block px-3 py-2 text-sm">Area personale</a>
-                            <div class="border-t"></div>
-                            <a href="/logout" class="block px-3 py-2 text-sm">Logout</a>
-                        </div>
+                <div class="relative">
+                    <button id="userMenuBtn" class="px-3 py-2 rounded hover:bg-gray-100 inline-flex items-center gap-2 whitespace-nowrap">
+                        <i class="fas fa-user"></i>
+                        <span><?php echo htmlspecialchars($displayName); ?></span>
+                    </button>
+                    <div id="userMenu" class="absolute right-0 mt-2 w-40 bg-[var(--bg-secondary)] border rounded shadow-sm hidden">
+                        <a href="/profile" class="block px-3 py-2 text-sm">Area personale</a>
+                        <div class="border-t"></div>
+                        <a href="/logout" class="block px-3 py-2 text-sm">Logout</a>
                     </div>
                 </div>
 
