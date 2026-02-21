@@ -89,6 +89,8 @@ $displayName = $currentUser['name'] ?? 'Utente';
                             <span class="icon" id="themeIcon">
                                 <i class="fas fa-sun"></i>
                             </span>
+                            <span class="theme-text is-hidden-mobile">Tema</span>
+                            <span class="icon is-hidden-touch" aria-hidden="true" style="margin-left:0.35rem"><i class="fas fa-caret-down"></i></span>
                         </button>
                     </div>
                     <div class="dropdown-menu" id="theme-menu" role="menu">

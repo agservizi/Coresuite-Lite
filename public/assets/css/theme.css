@@ -145,7 +145,8 @@ body {
 
 
 body.app-layout {
-    padding-top: 0;
+    /* garantisce spazio sotto la topbar fissa per tutte le pagine */
+    padding-top: var(--topbar-height);
     padding-left: 0;
     margin: 0;
     width: 100vw;
@@ -394,4 +395,36 @@ body.app-layout {
 
 .sidebar-overlay.is-active {
     display: block;
+}
+
+/* Additional UI tweaks: improved theme toggle look and footer bar */
+/* Improved visual for theme toggle: subtle border and better contrast */
+.theme-toggle-btn {
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 0.35rem 0.6rem;
+    gap: 0.35rem;
+}
+.theme-toggle-btn .icon { display: inline-flex; align-items: center; }
+.theme-text {
+    color: var(--text-secondary);
+    font-size: 0.92rem;
+    margin-left: 0.25rem;
+    display: inline-block;
+}
+.theme-toggle-btn:active, .theme-toggle-btn.is-active {
+    background: rgba(50,115,220,0.08);
+    color: var(--primary-color);
+}
+
+/* Decorative thin bar above the footer to make the footer visually separated */
+.global-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, rgba(50,115,220,0.95), rgba(50,115,220,0.6));
+    opacity: 0.09;
+    pointer-events: none;
 }
