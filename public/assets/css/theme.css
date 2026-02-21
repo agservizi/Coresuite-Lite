@@ -21,6 +21,13 @@
     color: #3273dc;
 }
 
+/* Small spacing between icon and text for topbar menu items */
+.navbar-start .navbar-item .icon {
+    margin-right: 0.45rem;
+    display: inline-flex;
+    align-items: center;
+}
+
 .sidebar.collapsed {
     width: 60px;
     min-width: 60px;

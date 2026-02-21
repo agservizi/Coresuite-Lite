@@ -43,57 +43,42 @@ $displayName = $currentUser['name'] ?? 'Utente';
 
     <div id="navbarMenuUser" class="navbar-menu">
         <div class="navbar-start">
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    <span class="icon"><i class="fas fa-bars"></i></span>
-                    Menu
-                </a>
-                <div class="navbar-dropdown">
-                    <a class="navbar-item <?php echo $isActivePath('/dashboard') ? 'is-active' : ''; ?>" href="/dashboard">
-                        <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
-                        Dashboard
-                    </a>
-                    <?php if ($isAdmin): ?>
-                    <hr class="navbar-divider">
-                    <div class="navbar-item has-text-weight-semibold is-size-7">Amministrazione</div>
-                    <a class="navbar-item <?php echo $isActivePath('/admin/users', true) ? 'is-active' : ''; ?>" href="/admin/users">
-                        <span class="icon"><i class="fas fa-users"></i></span>
-                        Gestione Utenti
-                    </a>
-                    <a class="navbar-item <?php echo $isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents/upload">
-                        <span class="icon"><i class="fas fa-upload"></i></span>
-                        Carica Documento
-                    </a>
-                    <?php endif; ?>
+            <a class="navbar-item <?php echo $isActivePath('/dashboard') ? 'is-active' : ''; ?>" href="/dashboard">
+                <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
+                <span>Dashboard</span>
+            </a>
 
-                    <hr class="navbar-divider">
-                    <div class="navbar-item has-text-weight-semibold is-size-7">Supporto</div>
-                    <a class="navbar-item <?php echo $isActivePath('/tickets', true) ? 'is-active' : ''; ?>" href="/tickets">
-                        <span class="icon"><i class="fas fa-ticket-alt"></i></span>
-                        Le mie richieste
-                    </a>
-                    <?php if ($isCustomer): ?>
-                    <a class="navbar-item <?php echo $isActivePath('/tickets/create') ? 'is-active' : ''; ?>" href="/tickets/create">
-                        <span class="icon"><i class="fas fa-plus"></i></span>
-                        Nuova richiesta
-                    </a>
-                    <?php endif; ?>
+            <?php if ($isAdmin): ?>
+            <a class="navbar-item <?php echo $isActivePath('/admin/users', true) ? 'is-active' : ''; ?>" href="/admin/users">
+                <span class="icon"><i class="fas fa-users"></i></span>
+                <span>Gestione Utenti</span>
+            </a>
+            <a class="navbar-item <?php echo $isActivePath('/documents/upload') ? 'is-active' : ''; ?>" href="/documents/upload">
+                <span class="icon"><i class="fas fa-upload"></i></span>
+                <span>Carica Documento</span>
+            </a>
+            <?php endif; ?>
 
-                    <hr class="navbar-divider">
-                    <div class="navbar-item has-text-weight-semibold is-size-7">Documenti</div>
-                    <a class="navbar-item <?php echo ($isActivePath('/documents', true) && !$isActivePath('/documents/upload')) ? 'is-active' : ''; ?>" href="/documents">
-                        <span class="icon"><i class="fas fa-file"></i></span>
-                        I miei documenti
-                    </a>
+            <a class="navbar-item <?php echo $isActivePath('/tickets', true) ? 'is-active' : ''; ?>" href="/tickets">
+                <span class="icon"><i class="fas fa-ticket-alt"></i></span>
+                <span>Le mie richieste</span>
+            </a>
+            <?php if ($isCustomer): ?>
+            <a class="navbar-item <?php echo $isActivePath('/tickets/create') ? 'is-active' : ''; ?>" href="/tickets/create">
+                <span class="icon"><i class="fas fa-plus"></i></span>
+                <span>Nuova richiesta</span>
+            </a>
+            <?php endif; ?>
 
-                    <hr class="navbar-divider">
-                    <div class="navbar-item has-text-weight-semibold is-size-7">Account</div>
-                    <a class="navbar-item <?php echo $isActivePath('/profile') ? 'is-active' : ''; ?>" href="/profile">
-                        <span class="icon"><i class="fas fa-user-cog"></i></span>
-                        Profilo
-                    </a>
-                </div>
-            </div>
+            <a class="navbar-item <?php echo ($isActivePath('/documents', true) && !$isActivePath('/documents/upload')) ? 'is-active' : ''; ?>" href="/documents">
+                <span class="icon"><i class="fas fa-file"></i></span>
+                <span>I miei documenti</span>
+            </a>
+
+            <a class="navbar-item <?php echo $isActivePath('/profile') ? 'is-active' : ''; ?>" href="/profile">
+                <span class="icon"><i class="fas fa-user-cog"></i></span>
+                <span>Profilo</span>
+            </a>
         </div>
 
         <div class="navbar-end">
