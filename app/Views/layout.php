@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?? 'CoreSuite Lite'; ?></title>
-    <!-- Temporary: include Bulma to restore legacy layouts while converting views -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <!-- Bulma removed: using Tailwind-only styles now -->
     <!-- Tailwind compiled CSS (build with npm run build:css) -->
     <link rel="stylesheet" href="/assets/css/tailwind.css">
     <!-- Font icons -->

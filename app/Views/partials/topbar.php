@@ -28,6 +28,21 @@ try {
 $displayName = $currentUser['name'] ?? 'Utente';
 ?>
 
+<style>
+/* Admin UI enhancements (scoped to topbar) */
+:root { --admin-accent: #06b6d4; --admin-bg-1: #081226; --admin-bg-2: #0b1724; --admin-contrast: #e6f6f9; }
+nav[aria-label="main navigation"] { background: linear-gradient(90deg,var(--admin-bg-1),var(--admin-bg-2)); color:var(--admin-contrast); box-shadow: 0 6px 18px rgba(2,6,23,0.6); }
+nav[aria-label="main navigation"] a { color: var(--admin-contrast); }
+nav[aria-label="main navigation"] .inline-flex.items-center > i { color: var(--admin-accent); min-width:18px; display:inline-block; text-align:center; }
+#userMenuBtn { border:1px solid rgba(255,255,255,0.06); padding:6px 10px; border-radius:9999px; background:rgba(255,255,255,0.02); }
+#userMenuBtn i { background: rgba(255,255,255,0.04); padding:6px; border-radius:50%; }
+.theme-toggle-btn i { color: var(--admin-accent); }
+a.inline-flex.items-center:hover { background: rgba(255,255,255,0.03); }
+/* Prevent wrapping of menu items */
+nav .whitespace-nowrap { white-space: nowrap; }
+@media (max-width: 768px) { nav .hidden.md\:flex { display:none !important; } }
+</style>
+
 <nav class="w-full bg-[var(--bg-secondary)] border-b z-50" role="navigation" aria-label="main navigation">
     <div class="max-w-screen-xl mx-auto px-4">
         <div class="flex items-center h-[var(--topbar-height)]">
