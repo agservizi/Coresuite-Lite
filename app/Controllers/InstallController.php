@@ -143,7 +143,6 @@ class InstallController {
     }
 
     private function loginUrl(): string {
-        $appUrl = rtrim((string) Config::get('APP_URL', ''), '/');
-        return $appUrl !== '' ? $appUrl . '/login' : '/login';
+        return '/login';
     }
 }
