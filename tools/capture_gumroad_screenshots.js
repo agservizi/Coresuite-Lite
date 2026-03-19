@@ -6,6 +6,7 @@ const baseUrl = process.env.CAPTURE_BASE_URL || 'http://127.0.0.1:8025';
 const outputDir = path.resolve(process.cwd(), 'docs/screenshots/gumroad');
 const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const desktopViewport = { width: 1728, height: 1117, deviceScaleFactor: 1 };
+const captureLocale = 'en';
 
 const shots = [
   { name: '01-login.png', path: '/login', auth: false, waitFor: '.login-stage' },
@@ -35,6 +36,10 @@ async function waitForOne(page, selectorList) {
 }
 
 async function login(page) {
+  await page.goto(`${baseUrl}/locale/${captureLocale}?redirect=${encodeURIComponent('/login')}`, {
+    waitUntil: 'networkidle2',
+    timeout: 30000,
+  });
   await page.goto(`${baseUrl}/login`, { waitUntil: 'networkidle2', timeout: 30000 });
   await page.waitForSelector('input[name="email"]', { timeout: 10000 });
   await page.type('input[name="email"]', 'admin@example.com', { delay: 20 });
@@ -74,6 +79,10 @@ async function capture() {
         await login(page);
         loggedIn = true;
       } else {
+        await page.goto(`${baseUrl}/locale/${captureLocale}?redirect=${encodeURIComponent(shot.path)}`, {
+          waitUntil: 'networkidle2',
+          timeout: 30000,
+        });
         await page.goto(`${baseUrl}${shot.path}`, { waitUntil: 'networkidle2', timeout: 30000 });
       }
 

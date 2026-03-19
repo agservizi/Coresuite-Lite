@@ -141,10 +141,29 @@
         ],
     ];
     $docRoot = $_SERVER['DOCUMENT_ROOT'] ?? '';
+    $requestHost = (string) ($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? '');
+    $requestHost = strtolower(trim(explode(':', $requestHost)[0] ?? ''));
+    $isLocalRequest = in_array($requestHost, ['localhost', '127.0.0.1', '::1'], true);
     $assetBase = (is_string($docRoot) && is_file(rtrim($docRoot, '/') . '/assets/css/bootstrap.css'))
         ? '/assets'
         : '/public/assets';
     $lt = $loginText[\Core\Locale::current()] ?? $loginText['it'];
+    $demoCredentialsFile = dirname(__DIR__, 2) . '/src/demo-login-credentials.php';
+    $demoCredentials = ($isLocalRequest && is_file($demoCredentialsFile)) ? require $demoCredentialsFile : null;
+    $demoAccounts = [];
+    if (is_array($demoCredentials)) {
+        if (!empty($demoCredentials['accounts']) && is_array($demoCredentials['accounts'])) {
+            $demoAccounts = array_values(array_filter($demoCredentials['accounts'], static function ($account) {
+                return is_array($account) && !empty($account['email']) && !empty($account['password']);
+            }));
+        } elseif (!empty($demoCredentials['email']) && !empty($demoCredentials['password'])) {
+            $demoAccounts[] = [
+                'label' => $demoCredentials['label'] ?? 'Demo',
+                'email' => $demoCredentials['email'],
+                'password' => $demoCredentials['password'],
+            ];
+        }
+    }
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -235,6 +254,26 @@
 
                     <?php if (isset($error)): ?>
                         <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($error); ?></div>
+                    <?php endif; ?>
+
+                    <?php if ($demoAccounts !== []): ?>
+                        <div class="login-demo-note" role="note" aria-label="Demo credentials">
+                            <div class="login-demo-note__header">
+                                <span class="login-demo-note__badge">Demo</span>
+                                <strong><?php echo htmlspecialchars((string) ($demoCredentials['title'] ?? 'Try the demo access')); ?></strong>
+                            </div>
+                            <?php if (!empty($demoCredentials['message'])): ?>
+                                <p class="login-demo-note__text"><?php echo htmlspecialchars((string) $demoCredentials['message']); ?></p>
+                            <?php endif; ?>
+                            <div class="login-demo-note__credentials">
+                                <?php foreach ($demoAccounts as $account): ?>
+                                    <div class="login-demo-note__account">
+                                        <span><strong><?php echo htmlspecialchars((string) ($account['label'] ?? 'Demo')); ?>:</strong> <?php echo htmlspecialchars((string) $account['email']); ?></span>
+                                        <span><strong>Password:</strong> <?php echo htmlspecialchars((string) $account['password']); ?></span>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     <?php endif; ?>
 
                     <form method="POST" action="/login" class="row g-3 login-form">
