@@ -144,12 +144,14 @@
     $requestHost = (string) ($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? '');
     $requestHost = strtolower(trim(explode(':', $requestHost)[0] ?? ''));
     $isLocalRequest = in_array($requestHost, ['localhost', '127.0.0.1', '::1'], true);
+    $demoCredentialsEnabled = strtolower((string) \Core\Config::get('DEMO_LOGIN_CREDENTIALS_ENABLED', '0'));
+    $shouldShowDemoCredentials = $isLocalRequest || in_array($demoCredentialsEnabled, ['1', 'true', 'yes', 'on'], true);
     $assetBase = (is_string($docRoot) && is_file(rtrim($docRoot, '/') . '/assets/css/bootstrap.css'))
         ? '/assets'
         : '/public/assets';
     $lt = $loginText[\Core\Locale::current()] ?? $loginText['it'];
     $demoCredentialsFile = dirname(__DIR__, 2) . '/src/demo-login-credentials.php';
-    $demoCredentials = ($isLocalRequest && is_file($demoCredentialsFile)) ? require $demoCredentialsFile : null;
+    $demoCredentials = ($shouldShowDemoCredentials && is_file($demoCredentialsFile)) ? require $demoCredentialsFile : null;
     $demoAccounts = [];
     if (is_array($demoCredentials)) {
         if (!empty($demoCredentials['accounts']) && is_array($demoCredentials['accounts'])) {

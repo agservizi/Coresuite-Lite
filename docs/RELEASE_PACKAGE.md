@@ -28,7 +28,7 @@ Use this guide before creating the final marketplace ZIP.
 - `seed.php`
 - `src/demo-login-credentials.php`
 
-Local demo login credentials must remain local-only: keep the optional `src/demo-login-credentials.php` file out of the package and use them only on `localhost`, `127.0.0.1`, or `::1`.
+Local demo login credentials must remain out of the package: keep the optional `src/demo-login-credentials.php` file excluded from the ZIP. The login page shows it automatically on `localhost`, `127.0.0.1`, or `::1`, and on remote demo/staging hosts only if `DEMO_LOGIN_CREDENTIALS_ENABLED=1` is set in `.env`.
 
 ## Recommended Release Structure
 

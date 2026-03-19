@@ -22,10 +22,12 @@ DB_PASS=password
 ```ini
 APP_URL=https://suite.example.com
 INSTALL_ENABLED=0
+DEMO_LOGIN_CREDENTIALS_ENABLED=0
 ```
 
 `APP_URL` is used in generated links such as password reset emails.  
 `INSTALL_ENABLED` should be set to `1` only during first-time setup.
+`DEMO_LOGIN_CREDENTIALS_ENABLED` can be set to `1` only on demo or staging environments when you want the login page to show the optional local credentials file outside localhost.
 
 ## Mail Settings
 
