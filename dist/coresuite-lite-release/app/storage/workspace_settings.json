@@ -1,0 +1,12 @@
+{
+    "workspace_name": "CoreSuite Lite",
+    "environment_label": "Production workspace",
+    "support_email": "support@example.com",
+    "default_theme": "system",
+    "sidebar_collapsed_default": false,
+    "customers_enabled": true,
+    "reports_enabled": true,
+    "audit_logs_enabled": true,
+    "documents_board_enabled": true,
+    "spotlight_hints_enabled": true
+}

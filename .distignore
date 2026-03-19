@@ -1,0 +1,15 @@
+.env
+server.log
+node_modules
+storage/logs
+storage/uploads
+public/preview.html
+public/dev_dashboard.php
+app/Views/partials/sidebar.php.bak
+.DS_Store
+.vscode
+dist
+src
+tools/screenshot.js
+LITE.session.sql
+seed.php
